@@ -1,0 +1,36 @@
+﻿<xw:XDialog x:Class="XNode.SubSystem.WindowSystem.TipDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XNode.SubSystem.WindowSystem"
+        xmlns:xw="clr-namespace:XLib.WPF.WindowDefine;assembly=XLib.WPF"
+        FontFamily="../../Assets/Font/#新宋体" WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        mc:Ignorable="d" Style="{StaticResource TipDialog}"
+        Title="提示" Height="151" Width="514">
+    <Grid x:Name="BackGrid">
+        <Grid Background="Transparent" Margin="20,10,20,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="35"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <!-- 图标 -->
+            <Image x:Name="Icon_Info" Source="Image/Info.png" Width="35" Height="35"/>
+            <Image x:Name="Icon_Break" Source="Image/Break.png" Width="35" Height="35" Visibility="Collapsed"/>
+            <Image x:Name="Icon_Warning" Source="Image/Warning.png" Width="35" Height="35" Visibility="Collapsed"/>
+            <Image x:Name="Icon_Error" Source="Image/Error.png" Width="35" Height="35" Visibility="Collapsed"/>
+            <!-- 文本 -->
+            <TextBlock x:Name="TipTextBlock" Background="Transparent" Foreground="White" Grid.Column="2" Grid.RowSpan="2"
+       HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,4,0,45"/>
+            <!-- 按钮 -->
+            <StackPanel Grid.Row="1" Height="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" Grid.ColumnSpan="3">
+                <Button x:Name="OK" Content="确定" Style="{StaticResource ConfirmButton}" IsDefault="True" Width="100"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</xw:XDialog>

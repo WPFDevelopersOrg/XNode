@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style TargetType="ToolTip">
+        <!-- 文本颜色 -->
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <!-- 外边框 -->
+                    <Border Name="Border" BorderThickness="6" Background="White">
+                        <!-- 阴影 -->
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="6" Color="Black" Opacity="0.4" Direction="0" ShadowDepth="0" RenderingBias="Quality"/>
+                        </Border.Effect>
+                        <!-- 提示文本 -->
+                        <ContentPresenter Margin="5,4,3,3" TextBlock.FontFamily="NSimSun" TextBlock.FontSize="13"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

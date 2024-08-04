@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Image\Close.png" />
+    <None Remove="Image\Expand.png" />
+    <None Remove="Image\Furl.png" />
+    <None Remove="Image\Max.png" />
+    <None Remove="Image\Min.png" />
+    <None Remove="Image\Normal.png" />
+    <None Remove="Image\XNode.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XLib.WPFControl\XLib.WPFControl.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Image\Close.png" />
+    <Resource Include="Image\Expand.png" />
+    <Resource Include="Image\Furl.png" />
+    <Resource Include="Image\Max.png" />
+    <Resource Include="Image\Min.png" />
+    <Resource Include="Image\Normal.png" />
+    <Resource Include="Image\XNode.png" />
+  </ItemGroup>
+
+</Project>

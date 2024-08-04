@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="XNode.SubSystem.NodeEditSystem.Control.PropertyBar.CustomListItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:XNode.SubSystem.NodeEditSystem.Control.PropertyBar"
+             mc:Ignorable="d" 
+             d:DesignWidth="320" Height="25">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="25"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="Input_Value" Style="{StaticResource ParaBox}" Text="Case_01" Height="25" TextChanged="Input_Value_TextChanged"/>
+        <Grid Background="#3c3c3c" Grid.Column="2">
+            <Button x:Name="Tool_Remove" Style="{StaticResource ToolBarButton}" Click="Tool_Remove_Click">
+                <Button.Content>
+                    <Image Source="../../../../Assets/Icon15/Delete.png" Width="15" Height="15"/>
+                </Button.Content>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

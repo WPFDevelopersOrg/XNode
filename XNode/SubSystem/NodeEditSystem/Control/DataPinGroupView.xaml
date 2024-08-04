@@ -1,0 +1,28 @@
+﻿<local:PinGroupViewBase x:Class="XNode.SubSystem.NodeEditSystem.Control.DataPinGroupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:XNode.SubSystem.NodeEditSystem.Control"
+             mc:Ignorable="d" 
+             d:DesignWidth="264" Height="25">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition />
+            <ColumnDefinition x:Name="InputBoxArea" Width="80"/>
+            <ColumnDefinition Width="25"/>
+        </Grid.ColumnDefinitions>
+        <!-- 左引脚 -->
+        <Image x:Name="Icon_LeftPin" Width="11" Height="11" IsHitTestVisible="False"/>
+        <!-- 左引脚区域 -->
+        <Grid x:Name="LeftPinArea" Background="Transparent" Grid.Column="0" Width="17" Height="17"/>
+        <!-- 数据 -->
+        <TextBlock x:Name="Block_Name" Text="数据名称" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Foreground="White" Margin="1,0,19,0"/>
+        <TextBox x:Name="Input_Value" Style="{StaticResource ParaBox}" Grid.Column="2" Margin="0,0,1,0"/>
+        <!-- 右引脚 -->
+        <Image x:Name="Icon_RightPin" Width="11" Height="11" Grid.Column="3" IsHitTestVisible="False"/>
+        <!-- 右引脚区域 -->
+        <Grid x:Name="RightPinArea" Background="Transparent" Grid.Column="3" Width="17" Height="17"/>
+    </Grid>
+</local:PinGroupViewBase>

@@ -1,0 +1,13 @@
+﻿<xw:XMainWindow x:Class="XNode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XNode"
+        xmlns:xw="clr-namespace:XLib.WPF.WindowDefine;assembly=XLib.WPF"
+        mc:Ignorable="d"
+        Style="{StaticResource XMainWindowStyle}"
+        FontFamily="Assets/Font/#新宋体" WindowStartupLocation="CenterScreen"
+        Title="XNode 1.0.0 Alpha" Height="720" Width="1280" MinWidth="1024" MinHeight="576">
+    <Grid Background="Transparent" x:Name="MainGrid"/>
+</xw:XMainWindow>

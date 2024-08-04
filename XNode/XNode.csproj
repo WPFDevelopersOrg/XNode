@@ -1,0 +1,184 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Cursor\CanNotMove.cur" />
+    <None Remove="Assets\Cursor\Cross.cur" />
+    <None Remove="Assets\Cursor\Disable.cur" />
+    <None Remove="Assets\Cursor\DragObject.cur" />
+    <None Remove="Assets\Cursor\Draw.cur" />
+    <None Remove="Assets\Cursor\Insert.cur" />
+    <None Remove="Assets\Cursor\Move.cur" />
+    <None Remove="Assets\Cursor\MoveBottom.cur" />
+    <None Remove="Assets\Cursor\MoveSelected.cur" />
+    <None Remove="Assets\Cursor\MoveTop.cur" />
+    <None Remove="Assets\Cursor\MoveX.cur" />
+    <None Remove="Assets\Cursor\MoveY.cur" />
+    <None Remove="Assets\Cursor\OnOff.cur" />
+    <None Remove="Assets\Cursor\ResizeDownUp.cur" />
+    <None Remove="Assets\Cursor\ResizeUpDown.cur" />
+    <None Remove="Assets\Cursor\Select.cur" />
+    <None Remove="Assets\Font\simsun.ttc" />
+    <None Remove="Assets\Icon15\Add.png" />
+    <None Remove="Assets\Icon15\Browse.png" />
+    <None Remove="Assets\Icon15\Clear.png" />
+    <None Remove="Assets\Icon15\ControlBoard.png" />
+    <None Remove="Assets\Icon15\Copy.png" />
+    <None Remove="Assets\Icon15\Delete.png" />
+    <None Remove="Assets\Icon15\EmptyFolder.png" />
+    <None Remove="Assets\Icon15\File.png" />
+    <None Remove="Assets\Icon15\Folder.png" />
+    <None Remove="Assets\Icon15\Lib.png" />
+    <None Remove="Assets\Icon15\Node.png" />
+    <None Remove="Assets\Icon15\NodePreset.png" />
+    <None Remove="Assets\Icon15\Remove.png" />
+    <None Remove="Assets\Icon15\Rename.png" />
+    <None Remove="Assets\Icon16\AlignCenter.png" />
+    <None Remove="Assets\Icon16\AlignLeft.png" />
+    <None Remove="Assets\Icon16\AlignRight.png" />
+    <None Remove="Assets\Icon16\ClearConsole.png" />
+    <None Remove="Assets\Icon16\CloseFile.png" />
+    <None Remove="Assets\Icon16\Console.png" />
+    <None Remove="Assets\Icon16\ExpandAll.png" />
+    <None Remove="Assets\Icon16\FurlAll.png" />
+    <None Remove="Assets\Icon16\NewFile.png" />
+    <None Remove="Assets\Icon16\Node\Calculator.png" />
+    <None Remove="Assets\Icon16\Node\Chip.png" />
+    <None Remove="Assets\Icon16\Node\CPU.png" />
+    <None Remove="Assets\Icon16\Node\Delay.png" />
+    <None Remove="Assets\Icon16\Node\Fan.png" />
+    <None Remove="Assets\Icon16\Node\Flow.png" />
+    <None Remove="Assets\Icon16\Node\FrameDriver.png" />
+    <None Remove="Assets\Icon16\Node\Function.png" />
+    <None Remove="Assets\Icon16\Node\Key.png" />
+    <None Remove="Assets\Icon16\Node\Loop.png" />
+    <None Remove="Assets\Icon16\Node\Message.png" />
+    <None Remove="Assets\Icon16\Node\Midi.png" />
+    <None Remove="Assets\Icon16\Node\Net.png" />
+    <None Remove="Assets\Icon16\Node\Node.png" />
+    <None Remove="Assets\Icon16\Node\Pause.png" />
+    <None Remove="Assets\Icon16\Node\Spectrum.png" />
+    <None Remove="Assets\Icon16\Node\Timer.png" />
+    <None Remove="Assets\Icon16\Node\Volume.png" />
+    <None Remove="Assets\Icon16\OpenFile.png" />
+    <None Remove="Assets\Icon16\Redo.png" />
+    <None Remove="Assets\Icon16\Rename.png" />
+    <None Remove="Assets\Icon16\Revert.png" />
+    <None Remove="Assets\Icon16\Save.png" />
+    <None Remove="Assets\Icon16\SaveAll.png" />
+    <None Remove="Assets\Icon16\SaveAs.png" />
+    <None Remove="Assets\Icon16\Undo.png" />
+    <None Remove="SubSystem\NodeEditSystem\Control\Image\BreakPin.png" />
+    <None Remove="SubSystem\NodeEditSystem\Control\Image\Delete.png" />
+    <None Remove="SubSystem\NodeEditSystem\Control\Image\Light_Black.png" />
+    <None Remove="SubSystem\NodeEditSystem\Control\Image\Light_Green.png" />
+    <None Remove="SubSystem\NodeEditSystem\Control\Image\Light_Red.png" />
+    <None Remove="SubSystem\NodeEditSystem\Control\Image\Start.png" />
+    <None Remove="SubSystem\NodeEditSystem\Control\Image\Stop.png" />
+    <None Remove="SubSystem\WindowSystem\Image\Break.png" />
+    <None Remove="SubSystem\WindowSystem\Image\Error.png" />
+    <None Remove="SubSystem\WindowSystem\Image\Info.png" />
+    <None Remove="SubSystem\WindowSystem\Image\Warning.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XLib.Base\XLib.Base.csproj" />
+    <ProjectReference Include="..\XLib.Drawing\XLib.Drawing.csproj" />
+    <ProjectReference Include="..\XLib.Node\XLib.Node.csproj" />
+    <ProjectReference Include="..\XLib.WPFControl\XLib.WPFControl.csproj" />
+    <ProjectReference Include="..\XLib.WPFStyle\XLib.WPFStyle.csproj" />
+    <ProjectReference Include="..\XLib.WPF\XLib.WPF.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Cursor\CanNotMove.cur" />
+    <Resource Include="Assets\Cursor\Cross.cur" />
+    <Resource Include="Assets\Cursor\Disable.cur" />
+    <Resource Include="Assets\Cursor\DragObject.cur" />
+    <Resource Include="Assets\Cursor\Draw.cur" />
+    <Resource Include="Assets\Cursor\Insert.cur" />
+    <Resource Include="Assets\Cursor\Move.cur" />
+    <Resource Include="Assets\Cursor\MoveBottom.cur" />
+    <Resource Include="Assets\Cursor\MoveSelected.cur" />
+    <Resource Include="Assets\Cursor\MoveTop.cur" />
+    <Resource Include="Assets\Cursor\MoveX.cur" />
+    <Resource Include="Assets\Cursor\MoveY.cur" />
+    <Resource Include="Assets\Cursor\OnOff.cur" />
+    <Resource Include="Assets\Cursor\ResizeDownUp.cur" />
+    <Resource Include="Assets\Cursor\ResizeUpDown.cur" />
+    <Resource Include="Assets\Cursor\Select.cur" />
+    <Resource Include="Assets\Font\simsun.ttc" />
+    <Resource Include="Assets\Icon15\Add.png" />
+    <Resource Include="Assets\Icon15\Browse.png" />
+    <Resource Include="Assets\Icon15\Clear.png" />
+    <Resource Include="Assets\Icon15\ControlBoard.png" />
+    <Resource Include="Assets\Icon15\Copy.png" />
+    <Resource Include="Assets\Icon15\Delete.png" />
+    <Resource Include="Assets\Icon15\EmptyFolder.png" />
+    <Resource Include="Assets\Icon15\File.png" />
+    <Resource Include="Assets\Icon15\Folder.png" />
+    <Resource Include="Assets\Icon15\Lib.png" />
+    <Resource Include="Assets\Icon15\Node.png" />
+    <Resource Include="Assets\Icon15\NodePreset.png" />
+    <Resource Include="Assets\Icon15\Remove.png" />
+    <Resource Include="Assets\Icon15\Rename.png" />
+    <Resource Include="Assets\Icon16\AlignCenter.png" />
+    <Resource Include="Assets\Icon16\AlignLeft.png" />
+    <Resource Include="Assets\Icon16\AlignRight.png" />
+    <Resource Include="Assets\Icon16\ClearConsole.png" />
+    <Resource Include="Assets\Icon16\CloseFile.png" />
+    <Resource Include="Assets\Icon16\Console.png" />
+    <Resource Include="Assets\Icon16\ExpandAll.png" />
+    <Resource Include="Assets\Icon16\FurlAll.png" />
+    <Resource Include="Assets\Icon16\NewFile.png" />
+    <Resource Include="Assets\Icon16\Node\Calculator.png" />
+    <Resource Include="Assets\Icon16\Node\Chip.png" />
+    <Resource Include="Assets\Icon16\Node\CPU.png" />
+    <Resource Include="Assets\Icon16\Node\Delay.png" />
+    <Resource Include="Assets\Icon16\Node\Fan.png" />
+    <Resource Include="Assets\Icon16\Node\Flow.png" />
+    <Resource Include="Assets\Icon16\Node\FrameDriver.png" />
+    <Resource Include="Assets\Icon16\Node\Function.png" />
+    <Resource Include="Assets\Icon16\Node\Key.png" />
+    <Resource Include="Assets\Icon16\Node\Loop.png" />
+    <Resource Include="Assets\Icon16\Node\Message.png" />
+    <Resource Include="Assets\Icon16\Node\Midi.png" />
+    <Resource Include="Assets\Icon16\Node\Net.png" />
+    <Resource Include="Assets\Icon16\Node\Node.png" />
+    <Resource Include="Assets\Icon16\Node\Pause.png" />
+    <Resource Include="Assets\Icon16\Node\Spectrum.png" />
+    <Resource Include="Assets\Icon16\Node\Timer.png" />
+    <Resource Include="Assets\Icon16\Node\Volume.png" />
+    <Resource Include="Assets\Icon16\OpenFile.png" />
+    <Resource Include="Assets\Icon16\Redo.png" />
+    <Resource Include="Assets\Icon16\Rename.png" />
+    <Resource Include="Assets\Icon16\Revert.png" />
+    <Resource Include="Assets\Icon16\Save.png" />
+    <Resource Include="Assets\Icon16\SaveAll.png" />
+    <Resource Include="Assets\Icon16\SaveAs.png" />
+    <Resource Include="Assets\Icon16\Undo.png" />
+    <Resource Include="SubSystem\NodeEditSystem\Control\Image\BreakPin.png" />
+    <Resource Include="SubSystem\NodeEditSystem\Control\Image\Delete.png" />
+    <Resource Include="SubSystem\NodeEditSystem\Control\Image\Light_Black.png" />
+    <Resource Include="SubSystem\NodeEditSystem\Control\Image\Light_Green.png" />
+    <Resource Include="SubSystem\NodeEditSystem\Control\Image\Light_Red.png" />
+    <Resource Include="SubSystem\NodeEditSystem\Control\Image\Start.png" />
+    <Resource Include="SubSystem\NodeEditSystem\Control\Image\Stop.png" />
+    <Resource Include="SubSystem\WindowSystem\Image\Break.png" />
+    <Resource Include="SubSystem\WindowSystem\Image\Error.png" />
+    <Resource Include="SubSystem\WindowSystem\Image\Info.png" />
+    <Resource Include="SubSystem\WindowSystem\Image\Warning.png" />
+  </ItemGroup>
+
+</Project>

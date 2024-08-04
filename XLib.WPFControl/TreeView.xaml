@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="XLib.WPFControl.TreeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:XLib.WPFControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="300"
+             MouseMove="UserControl_MouseMove" MouseUp="UserControl_MouseUp" MouseWheel="UserControl_MouseWheel">
+    <Grid x:Name="MainGrid" Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+        <Grid.Triggers>
+            <!-- 鼠标进入：显示滚动条 -->
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Duration="0:0:0.5" To="1" Storyboard.TargetName="MainScrollBar" Storyboard.TargetProperty="Opacity"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <!-- 鼠标离开：隐藏滚动条 -->
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Duration="0:0:0.5" To="0" Storyboard.TargetName="MainScrollBar" Storyboard.TargetProperty="Opacity" BeginTime="0:0:2"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+        <!-- 项列表 -->
+        <Grid Margin="10" ClipToBounds="True">
+            <StackPanel x:Name="ItemBox" Orientation="Vertical"/>
+            <!-- 目标框 -->
+            <Border x:Name="TargetBorder" BorderBrush="#55AAFF" BorderThickness="1" Height="23" VerticalAlignment="Top" IsHitTestVisible="False" Visibility="Hidden"/>
+        </Grid>
+        <!-- 滚动条 -->
+        <ScrollBar x:Name="MainScrollBar" Orientation="Vertical" HorizontalAlignment="Right" Tag="0" Width="5" Opacity="0"
+                   SmallChange="1" ViewportSize="0" Minimum="0" Maximum="0"
+                   ValueChanged="MainScrollBar_ValueChanged"/>
+    </Grid>
+</UserControl>
