@@ -1,1 +1,1 @@
-![](https://raw.githubusercontent.com/WPFDevelopersOrg/XNode-Wpf/master/XNode-MainWindow.png)
+![](https://raw.githubusercontent.com/WPFDevelopersOrg/XNode/master/XNode-MainWindow.png)
