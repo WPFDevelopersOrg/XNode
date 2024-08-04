@@ -4,6 +4,7 @@ using System.Windows.Media;
 using XLib.Base;
 using XLib.WPF.WindowDefine;
 using XLib.WPFControl;
+using XNode.SubSystem.EventSystem;
 using XNode.SubSystem.ResourceSystem;
 using XNode.SubSystem.WindowSystem;
 
@@ -28,6 +29,20 @@ namespace XNode
             InitToolBar();
             // 加载核心编辑器
             LoadCoreEditer();
+        }
+
+        #endregion
+
+        #region 窗口事件
+
+        private void XMainWindow_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            EM.Instance.Invoke(EventType.KeyDown, e.Key.ToString());
+        }
+
+        private void XMainWindow_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            EM.Instance.Invoke(EventType.KeyUp, e.Key.ToString());
         }
 
         #endregion

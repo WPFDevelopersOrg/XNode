@@ -203,6 +203,9 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         {
             UpdateLayerSize();
             UpdateGrid();
+            GetComponent<CardComponent>().UpdateNodeCard();
+            UpdateSelectedBox();
+            UpdateConnectLine();
         }
 
         #endregion

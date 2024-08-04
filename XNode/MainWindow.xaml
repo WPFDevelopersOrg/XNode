@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Style="{StaticResource XMainWindowStyle}"
         FontFamily="Assets/Font/#新宋体" WindowStartupLocation="CenterScreen"
-        Title="XNode 1.0.0 Alpha" Height="720" Width="1280" MinWidth="1024" MinHeight="576">
+        Title="XNode 1.0.0 Alpha" Height="720" Width="1280" MinWidth="1024" MinHeight="576"
+        PreviewKeyDown="XMainWindow_PreviewKeyDown" PreviewKeyUp="XMainWindow_PreviewKeyUp">
     <Grid Background="Transparent" x:Name="MainGrid"/>
 </xw:XMainWindow>
