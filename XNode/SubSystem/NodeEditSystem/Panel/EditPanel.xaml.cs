@@ -2,16 +2,25 @@
 using XLib.Base;
 using XLib.Base.UIComponent;
 using XLib.Base.VirtualDisk;
+using XLib.Node;
 using XNode.SubSystem.NodeEditSystem.Panel.Component;
 
 namespace XNode.SubSystem.NodeEditSystem.Panel
 {
     public partial class EditPanel : UserControl, IDropable
     {
-        public EditPanel()
-        {
-            InitializeComponent();
-        }
+        #region 属性
+
+        /// <summary>节点列表</summary>
+        public List<NodeBase> NodeList => _nodeComponent.NodeList;
+
+        #endregion
+
+        #region 构造方法
+
+        public EditPanel() => InitializeComponent();
+
+        #endregion
 
         #region 生命周期
 

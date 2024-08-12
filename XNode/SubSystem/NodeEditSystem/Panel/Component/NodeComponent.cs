@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using XLib.Base.ID;
 using XLib.Base.UIComponent;
 using XLib.Node;
@@ -16,6 +11,13 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
     /// </summary>
     public class NodeComponent : Component<EditPanel>
     {
+        #region 属性
+
+        /// <summary>节点列表</summary>
+        public List<NodeBase> NodeList => _nodeList;
+
+        #endregion
+
         #region 生命周期
 
         protected override void Reset()

@@ -4,7 +4,9 @@ using System.Windows.Media;
 using XLib.Base;
 using XLib.WPF.WindowDefine;
 using XLib.WPFControl;
+using XNode.AppTool;
 using XNode.SubSystem.EventSystem;
+using XNode.SubSystem.ProjectSystem;
 using XNode.SubSystem.ResourceSystem;
 using XNode.SubSystem.WindowSystem;
 
@@ -12,6 +14,20 @@ namespace XNode
 {
     public partial class MainWindow : XMainWindow
     {
+        #region 属性
+
+        /// <summary>核心编辑器实例</summary>
+        public CoreEditer Editer
+        {
+            get
+            {
+                if (_coreEditer == null) throw new Exception("核心编辑器为空");
+                return _coreEditer;
+            }
+        }
+
+        #endregion
+
         #region 构造方法
 
         public MainWindow() => InitializeComponent();
@@ -74,7 +90,7 @@ namespace XNode
                 // 监听工具栏
                 bar.ToolClick += ToolBar_ToolClick;
                 // 禁用工具栏
-                _toolBar.DisableAllTool();
+                // _toolBar.DisableAllTool();
                 _toolBar.EnableTool("Console");
                 _toolBar.EnableTool("ClearConsole");
             }
@@ -100,6 +116,8 @@ namespace XNode
                     break;
                 // 保存项目
                 case "SaveProject":
+                    ProjectManager.Instance.SaveProject();
+                    UpdateTitle();
                     break;
                 // 另存为项目
                 case "SaveAs":
@@ -137,6 +155,20 @@ namespace XNode
         {
             _coreEditer = new CoreEditer { Margin = new Thickness(0, 2, 0, 0) };
             MainGrid.Children.Add(_coreEditer);
+        }
+
+        /// <summary>
+        /// 更新标题
+        /// </summary>
+        private void UpdateTitle()
+        {
+            if (ProjectManager.Instance.CurrentProject != null)
+            {
+                Title = ProjectManager.Instance.CurrentProject.ProjectName;
+                if (!ProjectManager.Instance.Saved) Title += "*";
+                Title += " - " + AppDelegate.AppTitle;
+            }
+            else Title = AppDelegate.AppTitle;
         }
 
         #endregion

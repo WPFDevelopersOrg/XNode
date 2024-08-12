@@ -10,10 +10,7 @@ namespace XNode.AppTool
     {
         public static App Main { get; set; }
 
-        public static string Version { get; private set; } = "1.0.0";
-
-        /// <summary>名称比较器</summary>
-        public static NaturalComparator NameComparator { get; set; } = new NaturalComparator();
+        public static string AppTitle => "XNode 1.0.0 Alpha";
 
         public static void Init()
         {
