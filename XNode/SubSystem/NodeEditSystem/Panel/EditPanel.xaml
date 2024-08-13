@@ -26,7 +26,7 @@
         </Grid>
         <!-- 属性面板 -->
         <Border x:Name="PropertyArea" Grid.Row="1" BorderBrush="#101010" BorderThickness="1" Visibility="Collapsed"
-        HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20">
+                HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20">
             <Border BorderBrush="#5c5c5c" BorderThickness="1">
                 <nesc:NodePropertyPanel x:Name="PropertyPanel"/>
             </Border>

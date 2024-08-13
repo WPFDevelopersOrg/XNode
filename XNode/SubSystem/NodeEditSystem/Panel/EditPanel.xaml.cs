@@ -3,6 +3,8 @@ using XLib.Base;
 using XLib.Base.UIComponent;
 using XLib.Base.VirtualDisk;
 using XLib.Node;
+using XNode.SubSystem.EventSystem;
+using XNode.SubSystem.NodeEditSystem.Define;
 using XNode.SubSystem.NodeEditSystem.Panel.Component;
 
 namespace XNode.SubSystem.NodeEditSystem.Panel
@@ -44,6 +46,8 @@ namespace XNode.SubSystem.NodeEditSystem.Panel
             _componentBox.Init();
             // 启用编辑
             _editerComponent.ReqEnable();
+            // 监听系统事件
+            EM.Instance.Add(EventType.Project_Loaded, Project_Loaded);
         }
 
         #endregion
@@ -58,6 +62,43 @@ namespace XNode.SubSystem.NodeEditSystem.Panel
         }
 
         public bool CanDrop(List<ITreeItem> fileList) => fileList[0] is File file && file.Extension == "nt";
+
+        #endregion
+
+        #region 公开方法
+
+        /// <summary>
+        /// 重置
+        /// </summary>
+        public void Reset() => _componentBox.Reset();
+
+        /// <summary>
+        /// 加载节点
+        /// </summary>
+        public void LoadNode(NodeBase node) => _nodeComponent.LoadNode(node);
+
+        /// <summary>
+        /// 查找引脚
+        /// </summary>
+        public PinBase? FindPin(PinPath path)
+        {
+            foreach (var node in _nodeComponent.NodeList)
+                if (node.ID == path.NodeID) return node.FindPin(path.NodeVersion, path.GroupIndex, path.PinIndex);
+            return null;
+        }
+
+        #endregion
+
+        #region 系统事件
+
+        private void Project_Loaded()
+        {
+            // 更新引脚图标、连接信息
+            _interactionComponent.UpdateAllPinIcon();
+            _interactionComponent.UpdateConnectInfo();
+            // 更新连接线
+            _drawingComponent.UpdateConnectLine();
+        }
 
         #endregion
 

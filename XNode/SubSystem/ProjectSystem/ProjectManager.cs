@@ -1,13 +1,12 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using XLib.Base.ArchiveFrame;
 using XLib.Base.Ex;
 using XNode.SubSystem.ArchiveSystem;
+using XNode.SubSystem.EventSystem;
+using XNode.SubSystem.WindowSystem;
 
 namespace XNode.SubSystem.ProjectSystem
 {
@@ -29,11 +28,55 @@ namespace XNode.SubSystem.ProjectSystem
         public NodeProject? CurrentProject { get; set; } = null;
 
         /// <summary>已保存</summary>
-        public bool Saved { get; set; } = true;
+        public bool Saved
+        {
+            get => _saved;
+            set
+            {
+                _saved = value;
+                EM.Instance.Invoke(EventType.Project_Changed);
+            }
+        }
 
         #endregion
 
         #region 公开方法
+
+        /// <summary>
+        /// 打开项目
+        /// </summary>
+        public void OpenProject()
+        {
+            // 当前项目未保存
+            if (!Saved)
+            {
+                bool? result = WM.ShowAsk("当前项目未保存，是否保存？");
+                // 取消操作
+                if (result == null) return;
+                // 保存项目
+                else if (result == true) SaveProject();
+            }
+            // 选择项目文件
+            string filePath = FileTool.Instance.OpenReadProjectDialog();
+            if (filePath == "") return;
+            // 读取存档文件
+            ArchiveFile? file = ArchiveManager.Instance.ReadArchiveFile(filePath);
+            if (file == null)
+            {
+                WM.ShowError($"项目文件“{filePath}”读取失败：无效的存档文件");
+                return;
+            }
+            // 关闭当前项目
+            CloseProject();
+            // 加载项目
+            bool success = ArchiveManager.Instance.LoadArchive(file, filePath, (JObject)file.Data);
+            if (success)
+            {
+                SwitchProject(filePath);
+                Saved = true;
+                EM.Instance.Invoke(EventType.Project_Loaded);
+            }
+        }
 
         /// <summary>
         /// 保存项目
@@ -54,6 +97,18 @@ namespace XNode.SubSystem.ProjectSystem
             }
             // 执行保存
             ExecuteSave();
+        }
+
+        /// <summary>
+        /// 关闭项目
+        /// </summary>
+        public void CloseProject()
+        {
+            // 重置核心编辑器
+            WM.Main.Editer.ResetEditer();
+            // 置空当前项目
+            CurrentProject = null;
+            Saved = true;
         }
 
         /// <summary>
@@ -127,6 +182,12 @@ namespace XNode.SubSystem.ProjectSystem
 
             return backup.ProjectFilePath;
         }
+
+        #endregion
+
+        #region 属性字段
+
+        private bool _saved = true;
 
         #endregion
     }

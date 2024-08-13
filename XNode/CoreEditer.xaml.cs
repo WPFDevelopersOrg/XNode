@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using XLib.Node;
+using XNode.SubSystem.NodeEditSystem.Define;
 
 namespace XNode
 {
@@ -20,6 +21,25 @@ namespace XNode
             InitializeComponent();
             Loaded += CoreEditer_Loaded;
         }
+
+        #endregion
+
+        #region 公开方法
+
+        /// <summary>
+        /// 重置编辑器
+        /// </summary>
+        public void ResetEditer() => Panel_NodeEditer.Reset();
+
+        /// <summary>
+        /// 加载节点
+        /// </summary>
+        public void LoadNode(NodeBase node) => Panel_NodeEditer.LoadNode(node);
+
+        /// <summary>
+        /// 查找引脚
+        /// </summary>
+        public PinBase? FindPin(PinPath path) => Panel_NodeEditer.FindPin(path);
 
         #endregion
 

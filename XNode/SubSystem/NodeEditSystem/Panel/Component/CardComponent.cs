@@ -22,6 +22,17 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
 
         #endregion
 
+        #region 生命周期
+
+        protected override void Reset()
+        {
+            _host.LayerBox_Node.Children.Clear();
+            _cardList.Clear();
+            _selectedCardSet.Clear();
+        }
+
+        #endregion
+
         #region 公开方法
 
         /// <summary>

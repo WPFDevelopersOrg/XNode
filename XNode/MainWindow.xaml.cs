@@ -45,6 +45,9 @@ namespace XNode
             InitToolBar();
             // 加载核心编辑器
             LoadCoreEditer();
+
+            // 监听系统事件
+            EM.Instance.Add(EventType.Project_Changed, UpdateTitle);
         }
 
         #endregion
@@ -113,6 +116,8 @@ namespace XNode
                     break;
                 // 打开项目
                 case "OpenProject":
+                    ProjectManager.Instance.OpenProject();
+                    UpdateTitle();
                     break;
                 // 保存项目
                 case "SaveProject":

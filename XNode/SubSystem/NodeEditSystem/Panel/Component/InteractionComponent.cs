@@ -7,6 +7,7 @@ using XLib.Base.VirtualDisk;
 using XLib.Node;
 using XNode.SubSystem.NodeEditSystem.Control;
 using XNode.SubSystem.NodeEditSystem.Define;
+using XNode.SubSystem.ProjectSystem;
 using XNode.SubSystem.ResourceSystem;
 using XNode.SubSystem.WindowSystem;
 
@@ -22,6 +23,58 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         public Dictionary<PinBase, HashSet<PinBase>> ConnectInfo => _connectInfo;
 
         public NodeView? HoveredCard => _hoveredNodeView;
+
+        #endregion
+
+        #region 生命周期
+
+        protected override void Init()
+        {
+            _tool = new SelectTool(this);
+            _tool.Init();
+            _hoverToolBar = new HoverToolBar
+            {
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+            };
+            _host.LayerBox_ToolBar.Children.Add(_hoverToolBar);
+            _hoverToolBar.UpdateLayout();
+            _hoverToolBar.Visibility = Visibility.Collapsed;
+            _hoverToolBar.Init();
+            _hoverToolBar.ToolClick += HoverToolBar_ToolClick;
+        }
+
+        protected override void Enable()
+        {
+            _host.OperateArea.MouseMove += OperateArea_MouseMove;
+            _host.OperateArea.MouseDown += OperateArea_MouseDown;
+            _host.OperateArea.MouseUp += OperateArea_MouseUp;
+        }
+
+        protected override void Reset()
+        {
+            ResetComponent();
+        }
+
+        protected override void Disable()
+        {
+            ResetComponent();
+            _host.OperateArea.MouseMove -= OperateArea_MouseMove;
+            _host.OperateArea.MouseDown -= OperateArea_MouseDown;
+            _host.OperateArea.MouseUp -= OperateArea_MouseUp;
+            _hoverToolBar.Visibility = Visibility.Collapsed;
+        }
+
+        protected override void Remove()
+        {
+            ResetComponent();
+            _host.OperateArea.MouseMove -= OperateArea_MouseMove;
+            _host.OperateArea.MouseDown -= OperateArea_MouseDown;
+            _host.OperateArea.MouseUp -= OperateArea_MouseUp;
+            _hoverToolBar.ToolClick -= HoverToolBar_ToolClick;
+            _host.LayerBox_ToolBar.Children.Remove(_hoverToolBar);
+            _hoverToolBar = null;
+        }
 
         #endregion
 
@@ -62,6 +115,7 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             // 获取节点组件
             var component = GetComponent<NodeComponent>();
             // 放下节点
+            bool added = false;
             foreach (var item in itemList)
             {
                 if (item is File file && file.Instance is NodeType nodeType)
@@ -73,8 +127,11 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
                     nodeView.NodeBackMouseLeave = NodeBack_MouseLeave;
                     nodeView.PinGroupListChanged = PinGroupListChanged;
                     nodeView.NodeChanged = NodeChanged;
+                    added = true;
                 }
             }
+
+            if (added) ProjectManager.Instance.Saved = false;
         }
 
         /// <summary>
@@ -285,6 +342,8 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             GetComponent<DrawingComponent>().UpdateConnectLine();
             // 更新悬浮工具栏
             UpdateHoverToolBar();
+
+            ProjectManager.Instance.Saved = false;
         }
 
         public void EndDragNode()
@@ -361,6 +420,8 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
                 UpdateConnectInfo();
                 // 更新连接线视图
                 GetComponent<DrawingComponent>().UpdateConnectLine();
+
+                ProjectManager.Instance.Saved = false;
             }
             _startPin = null;
         }
@@ -396,6 +457,8 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             GetComponent<DrawingComponent>().UpdateConnectLine();
 
             _rightHitedPin = null;
+
+            ProjectManager.Instance.Saved = false;
         }
 
         #endregion
@@ -430,58 +493,6 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
 
         #endregion
 
-        #region 生命周期
-
-        protected override void Init()
-        {
-            _tool = new SelectTool(this);
-            _tool.Init();
-            _hoverToolBar = new HoverToolBar
-            {
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-            };
-            _host.LayerBox_ToolBar.Children.Add(_hoverToolBar);
-            _hoverToolBar.UpdateLayout();
-            _hoverToolBar.Visibility = Visibility.Collapsed;
-            _hoverToolBar.Init();
-            _hoverToolBar.ToolClick += HoverToolBar_ToolClick;
-        }
-
-        protected override void Enable()
-        {
-            _host.OperateArea.MouseMove += OperateArea_MouseMove;
-            _host.OperateArea.MouseDown += OperateArea_MouseDown;
-            _host.OperateArea.MouseUp += OperateArea_MouseUp;
-        }
-
-        protected override void Reset()
-        {
-            ResetComponent();
-        }
-
-        protected override void Disable()
-        {
-            ResetComponent();
-            _host.OperateArea.MouseMove -= OperateArea_MouseMove;
-            _host.OperateArea.MouseDown -= OperateArea_MouseDown;
-            _host.OperateArea.MouseUp -= OperateArea_MouseUp;
-            _hoverToolBar.Visibility = Visibility.Collapsed;
-        }
-
-        protected override void Remove()
-        {
-            ResetComponent();
-            _host.OperateArea.MouseMove -= OperateArea_MouseMove;
-            _host.OperateArea.MouseDown -= OperateArea_MouseDown;
-            _host.OperateArea.MouseUp -= OperateArea_MouseUp;
-            _hoverToolBar.ToolClick -= HoverToolBar_ToolClick;
-            _host.LayerBox_ToolBar.Children.Remove(_hoverToolBar);
-            _hoverToolBar = null;
-        }
-
-        #endregion
-
         #region 节点事件
 
         private void NodeBack_MouseEnter(NodeView nodeView) => _hoveredNodeView = nodeView;
@@ -501,7 +512,7 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
 
         private void NodeChanged()
         {
-            
+            ProjectManager.Instance.Saved = false;
         }
 
         #endregion
@@ -539,15 +550,6 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         #endregion
 
         #region 私有方法
-
-        /// <summary>
-        /// 测试节点
-        /// </summary>
-        private void TestNode()
-        {
-            if (GetComponent<CardComponent>().SelectedCardList.Count == 0) return;
-            GetComponent<CardComponent>().SelectedCardList[0].NodeInstance.Execute();
-        }
 
         /// <summary>
         /// 更新悬停工具栏
@@ -669,6 +671,8 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             GetComponent<DrawingComponent>().UpdateConnectLine();
             // 更新鼠标悬停
             HandleMouseMove();
+
+            ProjectManager.Instance.Saved = false;
         }
 
         /// <summary>
@@ -688,6 +692,11 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             _rightHitedPin = null;
 
             _connectInfo.Clear();
+
+            _hoverToolBar.Visibility = Visibility.Collapsed;
+            _host.PropertyPanel.Instance = null;
+            _host.PropertyPanel.ClearPropertyBar();
+            _host.PropertyArea.Visibility = Visibility.Collapsed;
         }
 
         #endregion

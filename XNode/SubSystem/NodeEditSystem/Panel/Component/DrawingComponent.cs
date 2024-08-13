@@ -34,6 +34,8 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             _host.OperateArea.SizeChanged += OperateArea_SizeChanged;
         }
 
+        protected override void Reset() => ResetLayer();
+
         #endregion
 
         #region 公开方法
@@ -244,6 +246,7 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         {
             // 重置网格
             _gridLayer.Reset();
+            _gridLayer.Update();
             // 清空连接线
             _connectLineLayer.ConnectLineList.Clear();
             _connectLineLayer.Clear();
