@@ -1,6 +1,4 @@
-﻿
-using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows;
 
 namespace XNode.SubSystem.NodeEditSystem.Define
 {
@@ -12,11 +10,5 @@ namespace XNode.SubSystem.NodeEditSystem.Define
         public Point Start { get; set; }
 
         public Point End { get; set; }
-
-        public Color Color { get; set; } = Colors.White;
-
-        public bool IsData { get; set; } = false;
-
-        public override string ToString() => $"{Start}-{End}";
     }
 }

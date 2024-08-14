@@ -93,11 +93,10 @@ namespace XNode.SubSystem.NodeEditSystem.Panel
 
         private void Project_Loaded()
         {
-            // 更新引脚图标、连接信息
+            // 更新引脚图标
             _interactionComponent.UpdateAllPinIcon();
-            _interactionComponent.UpdateConnectInfo();
-            // 更新连接线
-            _drawingComponent.UpdateConnectLine();
+            // 生成连接线
+            _nodeComponent.GenerateConnectLine();
         }
 
         #endregion

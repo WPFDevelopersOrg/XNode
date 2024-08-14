@@ -11,6 +11,8 @@
         Node,
         /// <summary>引脚</summary>
         Pin,
+        /// <summary>连接线</summary>
+        ConnectLine,
     }
 
     /// <summary>

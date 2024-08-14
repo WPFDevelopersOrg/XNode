@@ -82,6 +82,9 @@ public abstract class NodeBase
     /// <summary>引脚组列表变更</summary>
     public event Action PinGroupListChanged;
 
+    /// <summary>引脚已断开</summary>
+    public event Action<PinBase, PinBase> PinBreaked;
+
     #endregion
 
     #region 生命周期
@@ -388,6 +391,7 @@ public abstract class NodeBase
     {
         source.TargetList.Remove(target);
         target.SourceList.Remove(source);
+        PinBreaked?.Invoke(source, target);
     }
 
     #endregion

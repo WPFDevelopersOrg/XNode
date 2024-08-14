@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Security.Cryptography.Pkcs;
+using System.Windows;
 using XLib.Base.ID;
 using XLib.Base.UIComponent;
 using XLib.Node;
@@ -40,6 +41,7 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             var worldPoint = GetComponent<DrawingComponent>().ScreenToWorld(screenPoint);
             // 创建节点实例
             NodeBase nodeInstance = nodeType.NewInstance();
+            nodeInstance.PinBreaked += Node_PinBreaked;
             nodeInstance.TypeID = fileID;
             // 设置节点编号、坐标
             nodeInstance.ID = _nodeIDBox.TakeID();
@@ -59,6 +61,7 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         /// </summary>
         public void LoadNode(NodeBase node)
         {
+            node.PinBreaked += Node_PinBreaked;
             _nodeIDBox.UseID(node.ID);
             _nodeDict.Add(node.ID, node);
             _nodeList.Add(node);
@@ -74,12 +77,33 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         {
             node.Clear();
             node.BreakAllPin();
+            node.PinBreaked -= Node_PinBreaked;
             _nodeIDBox.RecycleID(node.ID);
             _nodeDict.Remove(node.ID);
             _nodeList.Remove(node);
         }
 
         /// <summary>
+        /// 生成连接线
+        /// </summary>
+        public void GenerateConnectLine()
+        {
+            // 遍历节点
+            foreach (var node in _nodeList)
+            {
+                // 遍历全部引脚
+                foreach (var pin in node.GetAllPin())
+                {
+                    // 忽略输入引脚与空输出引脚
+                    if (pin.Flow == PinFlow.Input || pin.TargetList.Count == 0) continue;
+                    // 添加连接线
+                    foreach (var target in pin.TargetList)
+                        GetComponent<DrawingComponent>().AddConnectLine(pin, target);
+                }
+            }
+        }
+
+        /*/// <summary>
         /// 获取连接信息
         /// </summary>
         public Dictionary<PinBase, HashSet<PinBase>> GetConnectInfo()
@@ -102,7 +126,13 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             }
             // 返回连接信息
             return connectInfo;
-        }
+        }*/
+
+        #endregion
+
+        #region 节点事件
+
+        private void Node_PinBreaked(PinBase start, PinBase end) => GetComponent<DrawingComponent>().RemoveConnectLine(start, end);
 
         #endregion
 

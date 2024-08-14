@@ -24,6 +24,7 @@ namespace XNode.SubSystem.NodeEditSystem.Panel
             中键按下();
 
             右键引脚();
+            右键连接线();
         }
 
         public override void OnLeftButtonDown()
@@ -52,8 +53,11 @@ namespace XNode.SubSystem.NodeEditSystem.Panel
 
         public override void OnRightButtonDown()
         {
-            if (_host.GetHitedArea() == Define.MouseHitedArea.Pin)
+            var hitedArea = _host.GetHitedArea();
+            if (hitedArea == Define.MouseHitedArea.Pin)
                 Invoke("右键引脚");
+            else if (hitedArea == Define.MouseHitedArea.ConnectLine)
+                Invoke("右键连接线");
         }
 
         private void 移动()
@@ -229,6 +233,18 @@ namespace XNode.SubSystem.NodeEditSystem.Panel
             });
             NewNode(Behaviors.RightUp, (_) =>
             {
+                _host.HandleMouseMove();
+                ResetTree();
+            });
+            Finish();
+        }
+
+        private void 右键连接线()
+        {
+            NewTree("右键连接线", null);
+            NewNode(Behaviors.RightUp, (_) =>
+            {
+                _host.RemoveConnectLine();
                 _host.HandleMouseMove();
                 ResetTree();
             });

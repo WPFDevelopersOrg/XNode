@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using XLib.Base.UIComponent;
 using XLib.Node;
+using XLib.WPF.Drawing;
 using XNode.AppTool;
 using XNode.SubSystem.NodeEditSystem.Control;
 using XNode.SubSystem.NodeEditSystem.Define;
@@ -23,6 +24,9 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             get => _hoverBoxLayer?.Box;
             set { if (_hoverBoxLayer != null) _hoverBoxLayer.Box = value; }
         }
+
+        /// <summary>悬停的连接线</summary>
+        public VisualConnectLine? HoveredConnectLine => _hoveredLine as VisualConnectLine;
 
         #endregion
 
@@ -146,36 +150,57 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         }
 
         /// <summary>
+        /// 添加连接线
+        /// </summary>
+        public void AddConnectLine(PinBase start, PinBase end)
+        {
+            VisualConnectLine connectLine = new VisualConnectLine
+            {
+                StartPin = start,
+                EndPin = end,
+                Start = GetPinPoint(start),
+                End = GetPinPoint(end),
+                IsData = start is DataPin,
+            };
+            if (connectLine.IsData) connectLine.Color = GetPinColor((DataPin)start);
+            _connectLineLayer.AddConnectLine(connectLine);
+            connectLine.Update();
+        }
+
+        /// <summary>
+        /// 移除连接线
+        /// </summary>
+        public void RemoveConnectLine(PinBase start, PinBase end) => _connectLineLayer.RemoveConnectLine(start, end);
+
+        /// <summary>
         /// 更新连接线
         /// </summary>
         public void UpdateConnectLine()
         {
-            // 清空连接线
-            _connectLineLayer.ConnectLineList.Clear();
-            // 遍历连接信息
-            foreach (var pair in GetComponent<InteractionComponent>().ConnectInfo)
+            // 遍历连接线元素
+            foreach (var element in _connectLineLayer.ConnectLineList)
             {
-                // 起点
-                Point start = GetPinPoint(pair.Key);
-                // 遍历目标引脚
-                foreach (var targetPin in pair.Value)
-                {
-                    // 终点
-                    Point end = GetPinPoint(targetPin);
-                    // 创建连接线
-                    ConnectLine connectLine = new ConnectLine
-                    {
-                        Start = new Point(start.X, start.Y),
-                        End = new Point(end.X, end.Y),
-                        IsData = pair.Key is DataPin,
-                    };
-                    if (connectLine.IsData) connectLine.Color = GetPinColor((DataPin)pair.Key);
-                    // 添加连接线
-                    _connectLineLayer.ConnectLineList.Add(connectLine);
-                }
+                // 更新连接线的坐标
+                element.Start = GetPinPoint(element.StartPin);
+                element.End = GetPinPoint(element.EndPin);
+                // 重绘连接线
+                element.Update();
             }
-            // 更新连接线图层
-            _connectLineLayer.Update();
+        }
+
+        /// <summary>
+        /// 更新悬停连接线
+        /// </summary>
+        public void UpdateHoveredConnectLine(Point point)
+        {
+            _hoveredLine = _connectLineLayer.GetHitedVisualElement(point);
+            if (_hoveredLine is VisualConnectLine line)
+            {
+                _lineBackLayer.Start = GetPinPoint(line.StartPin);
+                _lineBackLayer.End = GetPinPoint(line.EndPin);
+                _lineBackLayer.Update();
+            }
+            else _lineBackLayer.Clear();
         }
 
         /// <summary>
@@ -221,6 +246,7 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         {
             // 创建图层
             _gridLayer = new GridLayer();
+            _lineBackLayer = new ConnectLineBackLayer();
             _connectLineLayer = new ConnectLineLayer();
             _hoverBoxLayer = new HoverBoxLayer();
             _selectedBoxLayer = new SelectedBoxLayer();
@@ -228,6 +254,7 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             _tempLineLayer = new TempConnectLineLayer();
             // 添加图层
             Host.Layer_Base.Children.Add(_gridLayer);
+            Host.Layer_Base.Children.Add(_lineBackLayer);
             Host.Layer_Base.Children.Add(_connectLineLayer);
             Host.Layer_Box.Children.Add(_hoverBoxLayer);
             Host.Layer_Box.Children.Add(_selectedBoxLayer);
@@ -248,8 +275,8 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             _gridLayer.Reset();
             _gridLayer.Update();
             // 清空连接线
-            _connectLineLayer.ConnectLineList.Clear();
-            _connectLineLayer.Clear();
+            _lineBackLayer.Clear();
+            _connectLineLayer.ClearConnectLine();
             // 清空悬停框、选框
             _hoverBoxLayer.Box = null;
             _hoverBoxLayer.Clear();
@@ -269,6 +296,8 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
 
             _gridLayer.Width = width;
             _gridLayer.Height = height;
+            _lineBackLayer.Width = width;
+            _lineBackLayer.Height = height;
             _connectLineLayer.Width = width;
             _connectLineLayer.Height = height;
             _hoverBoxLayer.Width = width;
@@ -321,10 +350,12 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
 
         #endregion
 
-        #region 图层
+        #region 字段
 
         /// <summary>网格图层</summary>
         private GridLayer? _gridLayer;
+        /// <summary>连接线背景图层</summary>
+        private ConnectLineBackLayer? _lineBackLayer;
         /// <summary>连接线图层</summary>
         private ConnectLineLayer? _connectLineLayer;
         /// <summary>悬停框图层</summary>
@@ -335,6 +366,9 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         private SelectedBoxLayer? _selectedBoxLayer;
         /// <summary>临时连接线图层</summary>
         private TempConnectLineLayer? _tempLineLayer;
+
+        /// <summary>悬停连接线</summary>
+        private VisualElement? _hoveredLine = null;
 
         #endregion
     }

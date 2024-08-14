@@ -20,8 +20,6 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
     {
         #region 属性
 
-        public Dictionary<PinBase, HashSet<PinBase>> ConnectInfo => _connectInfo;
-
         public NodeView? HoveredCard => _hoveredNodeView;
 
         #endregion
@@ -156,10 +154,10 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         /// <summary>
         /// 更新连接信息
         /// </summary>
-        public void UpdateConnectInfo()
+        /*public void UpdateConnectInfo()
         {
             _connectInfo = GetComponent<NodeComponent>().GetConnectInfo();
-        }
+        }*/
 
         #endregion
 
@@ -180,8 +178,12 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         /// </summary>
         public MouseHitedArea GetHitedArea()
         {
+            // 如果悬停节点不为空
             if (_hoveredNodeView != null)
                 return _hoveredNodeView.HoveredPin == null ? MouseHitedArea.Node : MouseHitedArea.Pin;
+            // 如果悬停于连接线
+            else if (GetComponent<DrawingComponent>().HoveredConnectLine != null) return MouseHitedArea.ConnectLine;
+            // 返回空白区域
             return MouseHitedArea.Space;
         }
 
@@ -217,6 +219,8 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             GetComponent<DrawingComponent>().UpdateHoverBox();
             // 设置光标
             _host.OperateArea.Cursor = _tool.Cursor;
+            // 更新悬停连接线
+            GetComponent<DrawingComponent>().UpdateHoveredConnectLine(Mouse.GetPosition(_host.OperateArea));
         }
 
         /// <summary>
@@ -408,18 +412,18 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
                 {
                     _startPin.AddSource(endPin);
                     endPin.AddTarget(_startPin);
+                    // 添加连接线
+                    GetComponent<DrawingComponent>().AddConnectLine(endPin, _startPin);
                 }
                 else
                 {
                     _startPin.AddTarget(endPin);
                     endPin.AddSource(_startPin);
+                    // 添加连接线
+                    GetComponent<DrawingComponent>().AddConnectLine(_startPin, endPin);
                 }
                 // 更新引脚图标
                 UpdateAllPinIcon();
-                // 更新连接信息
-                UpdateConnectInfo();
-                // 更新连接线视图
-                GetComponent<DrawingComponent>().UpdateConnectLine();
 
                 ProjectManager.Instance.Saved = false;
             }
@@ -451,14 +455,25 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
 
             // 更新引脚图标
             UpdateAllPinIcon();
-            // 更新连接信息
-            UpdateConnectInfo();
-            // 更新连接线视图
-            GetComponent<DrawingComponent>().UpdateConnectLine();
 
             _rightHitedPin = null;
 
             ProjectManager.Instance.Saved = false;
+        }
+
+        #endregion
+
+        #region 移除连接线
+
+        public void RemoveConnectLine()
+        {
+            // 获取连接线
+            Layer.VisualConnectLine? connectLine = GetComponent<DrawingComponent>().HoveredConnectLine;
+            if (connectLine == null) return;
+            // 断开引脚
+            BreakPin(connectLine.StartPin, connectLine.EndPin);
+            // 更新引脚图标
+            UpdateAllPinIcon();
         }
 
         #endregion
@@ -503,8 +518,7 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         {
             // 更新选中框
             GetComponent<DrawingComponent>().UpdateSelectedBox();
-            // 更新连接信息与连接线
-            UpdateConnectInfo();
+            // 更新连接线
             GetComponent<DrawingComponent>().UpdateConnectLine();
             // 更新引脚图标
             UpdateAllPinIcon();
@@ -632,6 +646,8 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             if (end.Flow == start.Flow) return false;
             // 类型必须一致
             if (end.GetType() != start.GetType()) return false;
+            // 已连接
+            if (start.TargetList.Contains(end)) return false;
 
             return true;
         }
@@ -643,6 +659,7 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         {
             source.TargetList.Remove(target);
             target.SourceList.Remove(source);
+            GetComponent<DrawingComponent>().RemoveConnectLine(source, target);
         }
 
         /// <summary>
@@ -666,9 +683,6 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             UpdateHoverToolBar();
             // 更新属性面板
             UpdatePropertyPanel();
-            // 更新连接信息与连接线
-            UpdateConnectInfo();
-            GetComponent<DrawingComponent>().UpdateConnectLine();
             // 更新鼠标悬停
             HandleMouseMove();
 
@@ -690,8 +704,6 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
 
             _startPin = null;
             _rightHitedPin = null;
-
-            _connectInfo.Clear();
 
             _hoverToolBar.Visibility = Visibility.Collapsed;
             _host.PropertyPanel.Instance = null;
@@ -717,9 +729,6 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         private PinBase? _startPin;
         /// <summary>右键命中引脚</summary>
         private PinBase? _rightHitedPin = null;
-
-        /// <summary>连接信息</summary>
-        private Dictionary<PinBase, HashSet<PinBase>> _connectInfo = new Dictionary<PinBase, HashSet<PinBase>>();
 
         /// <summary>悬浮工具栏</summary>
         private HoverToolBar _hoverToolBar;
