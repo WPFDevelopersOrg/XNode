@@ -151,14 +151,6 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
             foreach (var card in GetComponent<CardComponent>().AllCard) card.UpdateAllPinIcon();
         }
 
-        /// <summary>
-        /// 更新连接信息
-        /// </summary>
-        /*public void UpdateConnectInfo()
-        {
-            _connectInfo = GetComponent<NodeComponent>().GetConnectInfo();
-        }*/
-
         #endregion
 
         #region 工具方法

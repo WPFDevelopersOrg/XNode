@@ -2,6 +2,8 @@
 using System.Windows.Controls;
 using XLib.Node;
 using XNode.SubSystem.NodeEditSystem.Define;
+using XNode.SubSystem.ProjectSystem;
+using XNode.SubSystem.WindowSystem;
 
 namespace XNode
 {
@@ -48,6 +50,8 @@ namespace XNode
         private void CoreEditer_Loaded(object sender, RoutedEventArgs e)
         {
             Init();
+            ProjectManager.Instance.NewProject();
+            ProjectManager.Instance.Saved = true;
         }
 
         #endregion

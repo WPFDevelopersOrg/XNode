@@ -1,11 +1,11 @@
 ﻿<wpfui:MoveableControl x:Class="XNode.SubSystem.NodeEditSystem.Control.NodeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:XNode.SubSystem.NodeEditSystem.Control"
              xmlns:wpfui="clr-namespace:XLib.WPF.UI;assembly=XLib.WPF"
-             mc:Ignorable="d" d:FontFamily="NSimSun" MinWidth="220" Focusable="True">
+             mc:Ignorable="d" d:FontFamily="NSimSun" MinWidth="200" Focusable="True">
     <!-- 控件实际区域 -->
     <Grid>
         <!-- 节点可点击区域 -->

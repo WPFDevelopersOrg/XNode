@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace XLib.WPF.Behavior
+﻿namespace XLib.WPF.Behavior
 {
     /// <summary>
     /// 行为节点

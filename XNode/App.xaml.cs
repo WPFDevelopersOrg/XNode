@@ -1,6 +1,4 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Windows;
+﻿using System.Windows;
 using XNode.AppTool;
 using XNode.SubSystem.WindowSystem;
 

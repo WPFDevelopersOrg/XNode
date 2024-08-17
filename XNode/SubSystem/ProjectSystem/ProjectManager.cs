@@ -43,12 +43,32 @@ namespace XNode.SubSystem.ProjectSystem
         #region 公开方法
 
         /// <summary>
+        /// 新建项目
+        /// </summary>
+        public void NewProject()
+        {
+            // 当前项目未保存
+            if (!_saved)
+            {
+                bool? result = WM.ShowAsk("当前项目未保存，是否保存？");
+                // 取消操作
+                if (result == null) return;
+                // 保存项目
+                else if (result == true) SaveProject();
+            }
+            // 关闭当前项目
+            CloseProject();
+            // 新建当前项目
+            CurrentProject = new NodeProject { ProjectName = GetNewProjectName() };
+        }
+
+        /// <summary>
         /// 打开项目
         /// </summary>
         public void OpenProject()
         {
             // 当前项目未保存
-            if (!Saved)
+            if (!_saved)
             {
                 bool? result = WM.ShowAsk("当前项目未保存，是否保存？");
                 // 取消操作
@@ -83,8 +103,10 @@ namespace XNode.SubSystem.ProjectSystem
         /// </summary>
         public void SaveProject()
         {
-            // 没有当前项目，则选择一个路径已创建当前项目
-            if (CurrentProject == null)
+            // 无当前项目
+            if (CurrentProject == null) throw new Exception("项目为空");
+            // 当前项目无路径，则选择一个路径已创建当前项目
+            if (CurrentProject.ProjectPath == "")
             {
                 // 选择项目保存路径
                 string projectPath = FileTool.Instance.OpenSaveProjectDialog();
@@ -100,6 +122,14 @@ namespace XNode.SubSystem.ProjectSystem
         }
 
         /// <summary>
+        /// 另存为项目
+        /// </summary>
+        public void SaveAsProject()
+        {
+
+        }
+
+        /// <summary>
         /// 关闭项目
         /// </summary>
         public void CloseProject()
@@ -108,7 +138,7 @@ namespace XNode.SubSystem.ProjectSystem
             WM.Main.Editer.ResetEditer();
             // 置空当前项目
             CurrentProject = null;
-            Saved = true;
+            _saved = true;
         }
 
         /// <summary>
@@ -131,6 +161,15 @@ namespace XNode.SubSystem.ProjectSystem
         #region 私有方法
 
         /// <summary>
+        /// 获取新建项目名称
+        /// </summary>
+        private string GetNewProjectName()
+        {
+            _newProjectCounter++;
+            return $"新建节点项目_{_newProjectCounter:00}";
+        }
+
+        /// <summary>
         /// 执行保存
         /// </summary>
         private void ExecuteSave()
@@ -140,7 +179,7 @@ namespace XNode.SubSystem.ProjectSystem
 
             try
             {
-                // 备份项目
+                // 备份项目：防止因保存异常导致项目文件损坏
                 string backupPath = BackupProject();
 
                 // 生成存档数据
@@ -185,7 +224,10 @@ namespace XNode.SubSystem.ProjectSystem
 
         #endregion
 
-        #region 属性字段
+        #region 字段
+
+        /// <summary>新建项目计数器</summary>
+        private int _newProjectCounter = 0;
 
         private bool _saved = true;
 

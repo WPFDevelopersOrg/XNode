@@ -4,6 +4,7 @@ using XLib.Base;
 using XLib.WPF.WindowDefine;
 using XLib.WPFControl;
 using XNode.AppTool;
+using XNode.SubSystem.CacheSystem;
 using XNode.SubSystem.EventSystem;
 using XNode.SubSystem.ProjectSystem;
 using XNode.SubSystem.ResourceSystem;
@@ -37,6 +38,10 @@ namespace XNode
 
         protected override void XWindowLoaded()
         {
+            // 恢复窗口状态并监听窗口状态
+            RecoverWindowState();
+            ListenWindowState();
+
             // 设置主窗口实例
             WM.Main = this;
 
@@ -66,6 +71,41 @@ namespace XNode
         #endregion
 
         #region 私有方法
+
+        /// <summary>
+        /// 恢复窗口状态
+        /// </summary>
+        private void RecoverWindowState()
+        {
+            WindowState = CacheManager.Instance.Cache.MainWindow.State;
+            Width = CacheManager.Instance.Cache.MainWindow.Width;
+            Height = CacheManager.Instance.Cache.MainWindow.Height;
+            // 居中窗口
+            Left = (SystemParameters.WorkArea.Width - Width) / 2;
+            Top = (SystemParameters.WorkArea.Height - Height) / 2;
+        }
+
+        /// <summary>
+        /// 监听窗口状态
+        /// </summary>
+        private void ListenWindowState()
+        {
+            StateChanged += (s, e) =>
+            {
+                if (WindowState is WindowState.Normal or WindowState.Maximized)
+                {
+                    CacheManager.Instance.Cache.MainWindow.State = WindowState;
+                    CacheManager.Instance.UpdateCache();
+                }
+            };
+            SizeChanged += (s, e) =>
+            {
+                if (WindowState == WindowState.Maximized) return;
+                CacheManager.Instance.Cache.MainWindow.Width = (int)Width;
+                CacheManager.Instance.Cache.MainWindow.Height = (int)Height;
+                CacheManager.Instance.UpdateCache();
+            };
+        }
 
         /// <summary>
         /// 初始化工具栏
@@ -112,6 +152,8 @@ namespace XNode
             {
                 // 新建项目
                 case "NewProject":
+                    ProjectManager.Instance.NewProject();
+                    UpdateTitle();
                     break;
                 // 打开项目
                 case "OpenProject":
