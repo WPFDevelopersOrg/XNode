@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Image\Close.png" />
+    <None Remove="Image\Close2.png" />
     <None Remove="Image\Expand.png" />
     <None Remove="Image\Furl.png" />
     <None Remove="Image\Max.png" />
@@ -23,6 +24,7 @@
 
   <ItemGroup>
     <Resource Include="Image\Close.png" />
+    <Resource Include="Image\Close2.png" />
     <Resource Include="Image\Expand.png" />
     <Resource Include="Image\Furl.png" />
     <Resource Include="Image\Max.png" />
