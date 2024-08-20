@@ -402,6 +402,10 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
                 // 连接引脚：将结束引脚写入起始引脚
                 if (_startPin.Flow == PinFlow.Input)
                 {
+                    // 如果是数据引脚，先移除原有的连接线
+                    if (_startPin is DataPin && _startPin.SourceList.Count > 0)
+                        GetComponent<DrawingComponent>().RemoveConnectLine(_startPin.SourceList[0], _startPin);
+                    // 连接源与目标。数据引脚会自动断开原有连接
                     _startPin.AddSource(endPin);
                     endPin.AddTarget(_startPin);
                     // 添加连接线
@@ -409,6 +413,10 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
                 }
                 else
                 {
+                    // 如果是数据引脚，先移除原有的连接线
+                    if (endPin is DataPin && endPin.SourceList.Count > 0)
+                        GetComponent<DrawingComponent>().RemoveConnectLine(endPin.SourceList[0], endPin);
+                    // 连接源与目标。数据引脚会自动断开原有连接
                     _startPin.AddTarget(endPin);
                     endPin.AddSource(_startPin);
                     // 添加连接线

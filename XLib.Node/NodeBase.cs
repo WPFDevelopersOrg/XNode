@@ -62,6 +62,16 @@ public abstract class NodeBase
 
     #endregion
 
+    #region 委托
+
+    /// <summary>打开进度条</summary>
+    public Action<IProgressGetter>? OpenProgressBar { get; set; } = null;
+
+    /// <summary>关闭进度条</summary>
+    public Action? CloseProgressBar { get; set; } = null;
+
+    #endregion
+
     #region 事件
 
     /// <summary>标题变更</summary>
@@ -141,7 +151,6 @@ public abstract class NodeBase
         }
     }
 
-    protected virtual void ExecuteNode() { }
 
     /// <summary>
     /// 获取引脚
@@ -312,6 +321,11 @@ public abstract class NodeBase
                 dataPinGroup.ValueChanged += DataPinGroup_ValueChanged;*/
         }
     }
+
+    /// <summary>
+    /// 执行节点
+    /// </summary>
+    protected virtual void ExecuteNode() { }
 
     /// <summary>
     /// 获取引脚组

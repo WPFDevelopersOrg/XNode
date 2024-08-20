@@ -32,12 +32,12 @@ namespace XNode.SubSystem.ProjectSystem
         /// <summary>
         /// 打开保存项目对话框
         /// </summary>
-        public string OpenSaveProjectDialog()
+        public string OpenSaveProjectDialog(string fileName)
         {
             SaveFileDialog dialog = new SaveFileDialog
             {
                 InitialDirectory = OptionManager.Instance.ProjectPath,
-                FileName = "未命名节点项目.xnode",
+                FileName = $"{fileName}.xnode",
                 Filter = _projectFilter.ToString(),
             };
             return dialog.ShowDialog() == true ? dialog.FileName : "";

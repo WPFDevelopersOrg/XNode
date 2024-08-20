@@ -101,7 +101,7 @@ namespace XNode.SubSystem.ProjectSystem
         /// <summary>
         /// 保存项目
         /// </summary>
-        public void SaveProject()
+        public bool SaveProject()
         {
             // 无当前项目
             if (CurrentProject == null) throw new Exception("项目为空");
@@ -109,9 +109,9 @@ namespace XNode.SubSystem.ProjectSystem
             if (CurrentProject.ProjectPath == "")
             {
                 // 选择项目保存路径
-                string projectPath = FileTool.Instance.OpenSaveProjectDialog();
+                string projectPath = FileTool.Instance.OpenSaveProjectDialog(CurrentProject.ProjectName);
                 // 未选择，取消保存
-                if (projectPath == "") return;
+                if (projectPath == "") return false;
                 // 设置为当前项目
                 SwitchProject(projectPath);
                 // 创建空文本文件
@@ -119,6 +119,7 @@ namespace XNode.SubSystem.ProjectSystem
             }
             // 执行保存
             ExecuteSave();
+            return true;
         }
 
         /// <summary>

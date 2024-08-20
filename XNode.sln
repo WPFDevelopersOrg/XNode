@@ -5,22 +5,24 @@ VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XNode", "XNode\XNode.csproj", "{76AB1B49-CA00-4705-A80F-EE20F7F26650}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XLib.WPFStyle", "XLib.WPFStyle\XLib.WPFStyle.csproj", "{310C0FCD-85AC-4032-9A04-DD6FCD5F9299}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XLib.WPFStyle", "XLib.WPFStyle\XLib.WPFStyle.csproj", "{310C0FCD-85AC-4032-9A04-DD6FCD5F9299}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XLib.WPF", "XLib.WPF\XLib.WPF.csproj", "{DBA0491B-DD15-409D-A98F-B56A6C6976C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XLib.WPF", "XLib.WPF\XLib.WPF.csproj", "{DBA0491B-DD15-409D-A98F-B56A6C6976C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XLib.Base", "XLib.Base\XLib.Base.csproj", "{DBEE9482-C744-45A9-B0AD-39A5408276D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XLib.Base", "XLib.Base\XLib.Base.csproj", "{DBEE9482-C744-45A9-B0AD-39A5408276D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XLib.WPFControl", "XLib.WPFControl\XLib.WPFControl.csproj", "{FC34A634-13BE-4581-8EBB-B038CBB8FA49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XLib.WPFControl", "XLib.WPFControl\XLib.WPFControl.csproj", "{FC34A634-13BE-4581-8EBB-B038CBB8FA49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XLib.Node", "XLib.Node\XLib.Node.csproj", "{AE46F475-73E3-44BC-BC2A-39F66398D5FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XLib.Node", "XLib.Node\XLib.Node.csproj", "{AE46F475-73E3-44BC-BC2A-39F66398D5FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XLib.Drawing", "XLib.Drawing\XLib.Drawing.csproj", "{EB554451-B54B-4E63-B45E-4E2B423C4C6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XLib.Drawing", "XLib.Drawing\XLib.Drawing.csproj", "{EB554451-B54B-4E63-B45E-4E2B423C4C6E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{50998382-3328-47A6-9FF7-689A9FEA69FB}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeLib.File", "NodeLib.File\NodeLib.File.csproj", "{E61A476A-046F-4258-B15E-28F33A035F16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +58,10 @@ Global
 		{EB554451-B54B-4E63-B45E-4E2B423C4C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB554451-B54B-4E63-B45E-4E2B423C4C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB554451-B54B-4E63-B45E-4E2B423C4C6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E61A476A-046F-4258-B15E-28F33A035F16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E61A476A-046F-4258-B15E-28F33A035F16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E61A476A-046F-4258-B15E-28F33A035F16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E61A476A-046F-4258-B15E-28F33A035F16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

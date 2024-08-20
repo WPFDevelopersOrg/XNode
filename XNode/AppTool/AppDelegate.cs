@@ -9,7 +9,7 @@ namespace XNode.AppTool
     {
         public static App Main { get; set; }
 
-        public static string AppTitle => "XNode 1.0.1 Alpha";
+        public static string AppTitle => "XNode 1.0.2 Alpha";
 
         public static void Init()
         {

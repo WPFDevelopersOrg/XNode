@@ -54,6 +54,29 @@ namespace XNode
             EM.Instance.Add(EventType.Project_Changed, UpdateTitle);
         }
 
+        protected override bool ReadyClose()
+        {
+            // 项目未保存
+            if (!ProjectManager.Instance.Saved)
+            {
+                bool? result = WM.ShowAsk("当前项目未保存，是否保存？");
+                // 保存
+                if (result == true)
+                {
+                    bool saved = ProjectManager.Instance.SaveProject();
+                    // 确定保存，但未执行，则取消操作
+                    if (!saved) return false;
+                }
+                // 取消操作
+                else if (result == null) return false;
+            }
+
+            // 关闭项目
+            ProjectManager.Instance.CloseProject();
+
+            return true;
+        }
+
         #endregion
 
         #region 窗口事件

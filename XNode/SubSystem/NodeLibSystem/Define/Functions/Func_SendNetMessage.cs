@@ -32,6 +32,7 @@ namespace XNode.SubSystem.NodeLibSystem.Define.Functions
             // 使用字节模式
             bool byteMode = bool.Parse(GetData(3));
             // 获取消息
+            UpdateData(4);
             string message = GetData(4);
             // 消息转字节
             byte[]? messageByte = MessageToByteArray(message, byteMode);

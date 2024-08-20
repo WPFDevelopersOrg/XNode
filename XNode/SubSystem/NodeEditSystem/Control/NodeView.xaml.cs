@@ -3,10 +3,13 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using XLib.Node;
 using XLib.WPF.UI;
+using XLib.WPFControl;
 using XNode.AppTool;
 using XNode.SubSystem.NodeEditSystem.Define;
 using XNode.SubSystem.ResourceSystem;
+using XNode.SubSystem.TimerSystem;
 using XNode.SubSystem.WindowSystem;
+using ProgressBar = XLib.WPFControl.ProgressBar;
 
 namespace XNode.SubSystem.NodeEditSystem.Control
 {
@@ -88,12 +91,17 @@ namespace XNode.SubSystem.NodeEditSystem.Control
             }
             if (_pinGroupViewList.Count > 0)
                 _pinGroupViewList[0].Margin = new Thickness(0);
+            // 设置节点委托
+            NodeInstance.OpenProgressBar = OpenProgressBar;
+            NodeInstance.CloseProgressBar = CloseProgress;
             // 监听节点
             NodeInstance.StateChanged += Node_StateChanged;
             NodeInstance.ExecuteError += Node_ExecuteError;
             NodeInstance.ParaChanged += Node_ParaChanged;
             NodeInstance.PropertyChanged += Node_PropertyChanged;
             NodeInstance.PinGroupListChanged += Node_PinGroupListChanged;
+            // 设置定时器处理器委托
+            _timerHandler.OnTick = TimerHandler_Tick;
         }
 
         /// <summary>
@@ -161,6 +169,39 @@ namespace XNode.SubSystem.NodeEditSystem.Control
 
         #endregion
 
+        #region 节点委托
+
+        private void OpenProgressBar(IProgressGetter progressGetter)
+        {
+            // 添加进度条控件
+            Dispatcher.Invoke(() =>
+            {
+                _progressBar = new ProgressBar
+                {
+                    Height = 1,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    IsHitTestVisible = false
+                };
+                NodeBack.Children.Add(_progressBar);
+                Grid.SetRow(_progressBar, 1);
+            });
+            // 设置进度获取器
+            _progressGetter = progressGetter;
+            // 启动实时刷新
+            AppTimer.Instance.AddTimerHandler(_timerHandler);
+        }
+
+        private void CloseProgress()
+        {
+            // 停止刷新
+            AppTimer.Instance.RemoveTimerHandler(_timerHandler);
+            // 移除进度条控件
+            Dispatcher.Invoke(() => NodeBack.Children.Remove(_progressBar));
+            _progressBar = null;
+        }
+
+        #endregion
+
         #region 节点事件
 
         private void Node_StateChanged()
@@ -181,10 +222,7 @@ namespace XNode.SubSystem.NodeEditSystem.Control
 
         private void Node_ExecuteError(Exception ex)
         {
-            AppDelegate.Invoke(() =>
-            {
-                WM.ShowError("节点执行异常：" + ex.Message);
-            });
+            Dispatcher.BeginInvoke(() => WM.ShowError("节点执行异常：" + ex.Message));
         }
 
         private void Node_ParaChanged() => NodeChanged?.Invoke();
@@ -215,7 +253,14 @@ namespace XNode.SubSystem.NodeEditSystem.Control
             NodeChanged?.Invoke();
         }
 
-
+        /// <summary>
+        /// 定时器.走动
+        /// </summary>
+        private void TimerHandler_Tick()
+        {
+            if (_progressBar == null || _progressGetter == null) return;
+            _progressBar.Progress = _progressGetter.GetProgress();
+        }
 
         /// <summary>
         /// 查找引脚组
@@ -278,6 +323,13 @@ namespace XNode.SubSystem.NodeEditSystem.Control
         private readonly List<PinConnectInfo> _connectInfoList = new List<PinConnectInfo>();
 
         private Color _nodeColor = Colors.White;
+
+        /// <summary>进度条控件</summary>
+        private ProgressBar? _progressBar = null;
+        /// <summary>进度获取器</summary>
+        private IProgressGetter? _progressGetter = null;
+        /// <summary>定时器处理器</summary>
+        private readonly TimerHandler _timerHandler = new TimerHandler();
 
         #endregion
     }

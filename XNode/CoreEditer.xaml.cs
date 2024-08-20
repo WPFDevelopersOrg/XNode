@@ -3,7 +3,6 @@ using System.Windows.Controls;
 using XLib.Node;
 using XNode.SubSystem.NodeEditSystem.Define;
 using XNode.SubSystem.ProjectSystem;
-using XNode.SubSystem.WindowSystem;
 
 namespace XNode
 {
@@ -68,12 +67,6 @@ namespace XNode
             // 初始化节点库面板
             Panel_NodeLib.Init();
         }
-
-        #endregion
-
-        #region 字段
-
-
 
         #endregion
     }

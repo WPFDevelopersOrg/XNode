@@ -9,7 +9,7 @@
     <!-- 控件实际区域 -->
     <Grid>
         <!-- 节点可点击区域 -->
-        <Grid x:Name="NodeBack" Background="Black" Grid.RowSpan="2" Margin="11,0" MouseEnter="NodeBack_MouseEnter" MouseLeave="NodeBack_MouseLeave">
+        <Grid x:Name="NodeBack" Background="Black" Margin="11,0" MouseEnter="NodeBack_MouseEnter" MouseLeave="NodeBack_MouseLeave">
             <Grid.RowDefinitions>
                 <RowDefinition Height="32"/>
                 <RowDefinition />

@@ -8,14 +8,8 @@ namespace XNode.SubSystem.NodeLibSystem.Define.Drivers
     /// <summary>
     /// 定时驱动器
     /// </summary>
-    public class TimerDriver : NodeBase, IFrameDriver
+    public class TimerDriver : NodeBase, IFrameDriver, IProgressGetter
     {
-        #region IFrameDriver 属性
-
-        public string Name { get; set; } = "定时驱动器";
-
-        #endregion
-
         #region 生命周期
 
         public override void Init()
@@ -32,17 +26,20 @@ namespace XNode.SubSystem.NodeLibSystem.Define.Drivers
 
         public override void Enable()
         {
+            OpenProgressBar?.Invoke(this);
             ControlEngine.Instance.Connect(this);
         }
 
         public override void Disable()
         {
+            CloseProgressBar?.Invoke();
             ControlEngine.Instance.Disconnect(this);
             _delay = 0;
         }
 
         public override void Clear()
         {
+            CloseProgressBar?.Invoke();
             ControlEngine.Instance.Disconnect(this);
             _delay = 0;
         }
@@ -85,6 +82,12 @@ namespace XNode.SubSystem.NodeLibSystem.Define.Drivers
                 _delay -= _frameLength;
             }
         }
+
+        #endregion
+
+        #region IProgressGetter 方法
+
+        public double GetProgress() => _delay / _frameLength;
 
         #endregion
 
