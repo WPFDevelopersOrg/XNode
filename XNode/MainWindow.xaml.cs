@@ -190,6 +190,8 @@ namespace XNode
                     break;
                 // 另存为项目
                 case "SaveAs":
+                    ProjectManager.Instance.SaveAsProject();
+                    UpdateTitle();
                     break;
                 // 撤销
                 case "Undo":

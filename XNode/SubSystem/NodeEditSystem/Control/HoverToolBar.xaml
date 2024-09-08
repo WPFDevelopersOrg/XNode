@@ -7,21 +7,6 @@
              mc:Ignorable="d">
     <Grid Background="#101010">
         <StackPanel x:Name="Stack_ToolBar" Orientation="Horizontal" Margin="1">
-            <Button x:Name="Tool_Copy" Style="{StaticResource HoverToolButton}" Height="27" Width="27" Visibility="Collapsed">
-                <Button.Content>
-                    <Image Source="Image/Copy.png" Height="15" Width="15"/>
-                </Button.Content>
-            </Button>
-            <Button x:Name="Tool_Rename" Style="{StaticResource HoverToolButton}" Height="27" Width="27" Margin="1,0,0,0" Visibility="Collapsed">
-                <Button.Content>
-                    <Image Source="Image/Rename.png" Height="15" Width="15"/>
-                </Button.Content>
-            </Button>
-            <Button x:Name="Tool_BreakPin" Style="{StaticResource HoverToolButton}" Height="27" Width="27" Margin="1,0,0,0" ToolTip="断开引脚" Visibility="Collapsed">
-                <Button.Content>
-                    <Image Source="Image/BreakPin2.png" Height="15" Width="15"/>
-                </Button.Content>
-            </Button>
             <Button x:Name="Tool_Start" Style="{StaticResource HoverToolButton}" Height="27" Width="27" Margin="0,0,0,0">
                 <Button.Content>
                     <Image Source="Image/Start.png" Height="15" Width="15"/>

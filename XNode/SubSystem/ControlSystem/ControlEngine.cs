@@ -13,15 +13,9 @@ namespace XNode.SubSystem.ControlSystem
 
         #endregion
 
-        #region 属性
-
-        public override string Name { get; set; } = "控制引擎";
-
-        #endregion
-
         #region 生命周期
 
-        public override void Start() => TimeEngine.Instance.AddHandler(this);
+        public override void Start() => TimeEngine.Instance.AddTimerHandler(this);
 
         public override void Stop() => TimeEngine.Instance.RemoveHandler(this);
 

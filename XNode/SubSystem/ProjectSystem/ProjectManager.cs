@@ -79,6 +79,12 @@ namespace XNode.SubSystem.ProjectSystem
             // 选择项目文件
             string filePath = FileTool.Instance.OpenReadProjectDialog();
             if (filePath == "") return;
+            // 防止重复打开
+            if (CurrentProject != null && CurrentProject.ProjectFilePath == filePath)
+            {
+                WM.ShowTip($"项目“{CurrentProject.ProjectName}”已打开");
+                return;
+            }
             // 读取存档文件
             ArchiveFile? file = ArchiveManager.Instance.ReadArchiveFile(filePath);
             if (file == null)
@@ -127,7 +133,18 @@ namespace XNode.SubSystem.ProjectSystem
         /// </summary>
         public void SaveAsProject()
         {
-
+            // 无当前项目
+            if (CurrentProject == null) throw new Exception("项目为空");
+            // 选择另存路径
+            string projectPath = FileTool.Instance.OpenSaveProjectDialog(CurrentProject.ProjectName);
+            // 未选择，取消另存
+            if (projectPath == "") return;
+            // 设置为当前项目
+            SwitchProject(projectPath);
+            // 创建空文本文件
+            File.WriteAllText(projectPath, "", Encoding.UTF8);
+            // 执行保存
+            ExecuteSave();
         }
 
         /// <summary>

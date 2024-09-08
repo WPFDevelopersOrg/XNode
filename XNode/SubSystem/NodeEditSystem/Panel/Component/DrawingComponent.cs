@@ -1,7 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using XLib.Animate;
 using XLib.Base.UIComponent;
+using XLib.Math.Easing;
 using XLib.Node;
 using XLib.WPF.Drawing;
 using XNode.AppTool;
@@ -22,7 +24,17 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         public TargetBox? HoverBox
         {
             get => _hoverBoxLayer?.Box;
-            set { if (_hoverBoxLayer != null) _hoverBoxLayer.Box = value; }
+            set
+            {
+                // 图层为空，则忽略
+                if (_hoverBoxLayer == null) return;
+
+                // 设置悬停框
+                _hoverBoxLayer.Box = value;
+                // 播放悬停框动画
+                if (value != null)
+                    _hoverBoxLayer.Motion("BoxMargin", 10, 0, 200, EasingType.QuinticEase, EasingMode.EaseOut);
+            }
         }
 
         /// <summary>悬停的连接线</summary>

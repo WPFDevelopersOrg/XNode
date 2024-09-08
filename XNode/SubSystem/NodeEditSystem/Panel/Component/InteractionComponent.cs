@@ -195,22 +195,12 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         {
             // 重置光标
             _tool.Cursor = CursorManager.Instance.Select;
-            // 无悬停节点：置空悬停框
-            if (_hoveredNodeView == null) GetComponent<DrawingComponent>().HoverBox = null;
-            else
-            {
-                GetComponent<DrawingComponent>().HoverBox = new TargetBox
-                {
-                    ScreenPoint = new Point(Canvas.GetLeft(_hoveredNodeView) + 9, Canvas.GetTop(_hoveredNodeView) - 2),
-                    Width = _hoveredNodeView.ActualWidth - 18,
-                    Height = _hoveredNodeView.ActualHeight + 4
-                };
-                // 悬停在引脚上：切换光标
-                if (_hoveredNodeView.HoveredPin != null) _tool.Cursor = CursorManager.Instance.Cross;
-            }
-            GetComponent<DrawingComponent>().UpdateHoverBox();
+            // 悬停在引脚上：切换光标
+            if (_hoveredNodeView != null && _hoveredNodeView.HoveredPin != null)
+                _tool.Cursor = CursorManager.Instance.Cross;
             // 设置光标
             _host.OperateArea.Cursor = _tool.Cursor;
+
             // 更新悬停连接线
             GetComponent<DrawingComponent>().UpdateHoveredConnectLine(Mouse.GetPosition(_host.OperateArea));
         }
@@ -510,9 +500,9 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
 
         #region 节点事件
 
-        private void NodeBack_MouseEnter(NodeView nodeView) => _hoveredNodeView = nodeView;
+        private void NodeBack_MouseEnter(NodeView nodeView) => SwitchHoverTarget(nodeView);
 
-        private void NodeBack_MouseLeave(NodeView nodeView) => _hoveredNodeView = null;
+        private void NodeBack_MouseLeave(NodeView nodeView) => SwitchHoverTarget(null);
 
         private void PinGroupListChanged()
         {
@@ -564,6 +554,35 @@ namespace XNode.SubSystem.NodeEditSystem.Panel.Component
         #endregion
 
         #region 私有方法
+
+        /// <summary>
+        /// 切换悬停目标
+        /// </summary>
+        private void SwitchHoverTarget(NodeView? target)
+        {
+            // 与当前目标一致，忽略
+            if (_hoveredNodeView == target) return;
+            // 更新目标
+            _hoveredNodeView = target;
+
+            // 当前目标为空，清空悬停框
+            if (_hoveredNodeView == null)
+            {
+                GetComponent<DrawingComponent>().HoverBox = null;
+                GetComponent<DrawingComponent>().UpdateHoverBox();
+                return;
+            }
+            // 当前目标已选中，不绘制悬停框
+            if (GetComponent<CardComponent>().SelectedCardList.Contains(_hoveredNodeView)) return;
+
+            // 设置悬停框
+            GetComponent<DrawingComponent>().HoverBox = new TargetBox
+            {
+                ScreenPoint = new Point(Canvas.GetLeft(_hoveredNodeView) + 9, Canvas.GetTop(_hoveredNodeView) - 2),
+                Width = _hoveredNodeView.ActualWidth - 18,
+                Height = _hoveredNodeView.ActualHeight + 4
+            };
+        }
 
         /// <summary>
         /// 更新悬停工具栏

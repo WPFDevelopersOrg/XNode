@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XLib.Animate\XLib.Animate.csproj" />
+    <ProjectReference Include="..\XLib.Base\XLib.Base.csproj" />
+    <ProjectReference Include="..\XLib.Drawing\XLib.Drawing.csproj" />
+    <ProjectReference Include="..\XLib.Math\XLib.Math.csproj" />
+    <ProjectReference Include="..\XLib.WPF\XLib.WPF.csproj" />
+  </ItemGroup>
+
+</Project>

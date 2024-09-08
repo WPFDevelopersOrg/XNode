@@ -4,6 +4,7 @@ using XLib.Base;
 using XLib.Base.Ex;
 using XLib.Base.VirtualDisk;
 using XLib.Node;
+using XNode.SubSystem.NodeLibSystem.Define.Data;
 using XNode.SubSystem.NodeLibSystem.Define.Drivers;
 using XNode.SubSystem.NodeLibSystem.Define.Events;
 using XNode.SubSystem.NodeLibSystem.Define.Flows;
@@ -54,6 +55,10 @@ namespace XNode.SubSystem.NodeLibSystem
         {
             return typeString switch
             {
+                nameof(Data_Int) => new Data_Int(),
+                nameof(Data_Double) => new Data_Double(),
+                nameof(Data_String) => new Data_String(),
+
                 nameof(FrameDriver) => new FrameDriver(),
                 nameof(TimerDriver) => new TimerDriver(),
 
@@ -99,11 +104,16 @@ namespace XNode.SubSystem.NodeLibSystem
             Folder 事件节点 = _nodeLibRoot.CreateFolder(内置节点, "事件节点".PackToList());
             Folder 函数节点 = _nodeLibRoot.CreateFolder(内置节点, "函数节点".PackToList());
             Folder 流控制节点 = _nodeLibRoot.CreateFolder(内置节点, "流控制节点".PackToList());
+            Folder 数据节点 = _nodeLibRoot.CreateFolder(内置节点, "数据节点".PackToList());
             // 创建二级文件夹
             Folder 运算函数 = _nodeLibRoot.CreateFolder(函数节点.Path.AppendElement("运算函数"));
             Folder 转换器 = _nodeLibRoot.CreateFolder(函数节点.Path.AppendElement("转换器"));
             Folder 执行控制 = _nodeLibRoot.CreateFolder(函数节点.Path.AppendElement("执行控制"));
             // 创建文件
+            _nodeLibRoot.CreateFile(数据节点, "整数", "nt", new NodeType<Data_Int>());
+            _nodeLibRoot.CreateFile(数据节点, "小数", "nt", new NodeType<Data_Double>());
+            _nodeLibRoot.CreateFile(数据节点, "字符串", "nt", new NodeType<Data_String>());
+
             _nodeLibRoot.CreateFile(驱动节点, "帧驱动器", "nt", new NodeType<FrameDriver>());
             _nodeLibRoot.CreateFile(驱动节点, "定时驱动器", "nt", new NodeType<TimerDriver>());
 

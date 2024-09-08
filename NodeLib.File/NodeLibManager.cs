@@ -1,4 +1,6 @@
 ﻿using NodeLib.File.Define;
+using NodeLib.File.Define.Rename;
+using XLib.Base.Ex;
 using XLib.Base.VirtualDisk;
 using XLib.Node;
 
@@ -27,6 +29,10 @@ namespace NodeLib.File
 
         public void Init()
         {
+            Folder 重命名 = LibHarddisk.CreateFolder("重命名".PackToList());
+
+            LibHarddisk.CreateFile(重命名, "全大写", "nt", new NodeType<Func_Upper>());
+
             LibHarddisk.CreateFile(LibHarddisk.Root, "计算文件摘要", "nt", new NodeType<Func_GetFileMD5>());
         }
 
@@ -36,6 +42,8 @@ namespace NodeLib.File
         {
             return typeString switch
             {
+                nameof(Func_Upper) => new Func_Upper(),
+
                 nameof(Func_GetFileMD5) => new Func_GetFileMD5(),
 
                 _ => null,

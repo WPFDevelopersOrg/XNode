@@ -20,8 +20,6 @@ namespace XNode.SubSystem.TimerSystem
 
         #region 属性
 
-        public override string Name { get; set; } = "定时器引擎";
-
         /// <summary>当前时间。单位：毫秒</summary>
         public static double Time => Instance._stopwatch.DoubleMs();
 
@@ -48,7 +46,7 @@ namespace XNode.SubSystem.TimerSystem
 
         #region 公开方法
 
-        public void AddHandler(ITimerHandler handler)
+        public void AddTimerHandler(ITimerHandler handler)
         {
             if (_handlerList.Contains(handler)) return;
             _handlerList = new List<ITimerHandler>(_handlerList) { handler };

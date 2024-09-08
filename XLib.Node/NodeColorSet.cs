@@ -20,6 +20,9 @@
         /// <summary>流控制</summary>
         public static NodeColor Flow => new NodeColor("B3D465");
 
+        /// <summary>数据</summary>
+        public static NodeColor Data => new NodeColor("AAAAAA");
+
         /// <summary>显示器</summary>
         public static NodeColor Display => new NodeColor("FFFFFF");
     }

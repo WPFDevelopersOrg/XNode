@@ -66,6 +66,7 @@
     <None Remove="Assets\Icon16\Node\Pause.png" />
     <None Remove="Assets\Icon16\Node\Spectrum.png" />
     <None Remove="Assets\Icon16\Node\Timer.png" />
+    <None Remove="Assets\Icon16\Node\Variate.png" />
     <None Remove="Assets\Icon16\Node\Volume.png" />
     <None Remove="Assets\Icon16\OpenFile.png" />
     <None Remove="Assets\Icon16\Redo.png" />
@@ -89,8 +90,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\XLib.Animate\XLib.Animate.csproj" />
     <ProjectReference Include="..\XLib.Base\XLib.Base.csproj" />
     <ProjectReference Include="..\XLib.Drawing\XLib.Drawing.csproj" />
+    <ProjectReference Include="..\XLib.Math\XLib.Math.csproj" />
     <ProjectReference Include="..\XLib.Node\XLib.Node.csproj" />
     <ProjectReference Include="..\XLib.WPFControl\XLib.WPFControl.csproj" />
     <ProjectReference Include="..\XLib.WPFStyle\XLib.WPFStyle.csproj" />
@@ -159,6 +162,7 @@
     <Resource Include="Assets\Icon16\Node\Pause.png" />
     <Resource Include="Assets\Icon16\Node\Spectrum.png" />
     <Resource Include="Assets\Icon16\Node\Timer.png" />
+    <Resource Include="Assets\Icon16\Node\Variate.png" />
     <Resource Include="Assets\Icon16\Node\Volume.png" />
     <Resource Include="Assets\Icon16\OpenFile.png" />
     <Resource Include="Assets\Icon16\Redo.png" />

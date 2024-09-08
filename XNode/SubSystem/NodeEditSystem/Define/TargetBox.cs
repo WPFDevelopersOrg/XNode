@@ -13,6 +13,9 @@ namespace XNode.SubSystem.NodeEditSystem.Define
 
         public double Width { get; set; }
 
+        /// <summary>外框偏移。正数向外，负数向内</summary>
+        public double BoxOffset { get; set; } = 0;
+
         /// <summary>
         /// 获取绘制目标框的坐标列表。共绘制八条线，每条线两个坐标
         /// </summary>
@@ -20,10 +23,10 @@ namespace XNode.SubSystem.NodeEditSystem.Define
         {
             List<Point> result = new List<Point>();
 
-            double left = ScreenPoint.X;
-            double right = ScreenPoint.X + Width;
-            double top = ScreenPoint.Y;
-            double bottom = ScreenPoint.Y + Height;
+            double left = ScreenPoint.X - BoxOffset;
+            double right = ScreenPoint.X + Width + BoxOffset;
+            double top = ScreenPoint.Y - BoxOffset;
+            double bottom = ScreenPoint.Y + Height + BoxOffset;
 
             double hx1 = left + lineLength;
             double hx2 = right - lineLength;

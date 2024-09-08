@@ -5,8 +5,6 @@
     /// </summary>
     public abstract class ServiceBase
     {
-        public abstract string Name { get; set; }
-
         public abstract void Start();
 
         public abstract void Stop();

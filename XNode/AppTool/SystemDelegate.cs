@@ -1,4 +1,5 @@
-﻿using XLib.Base.AppFrame;
+﻿using XLib.Animate;
+using XLib.Base.AppFrame;
 using XNode.SubSystem.CacheSystem;
 using XNode.SubSystem.ControlSystem;
 using XNode.SubSystem.EventSystem;
@@ -39,6 +40,8 @@ namespace XNode.AppTool
             ServiceList.Add(AppTimer.Instance);
             // 控制引擎
             ServiceList.Add(ControlEngine.Instance);
+            // 动画引擎
+            ServiceList.Add(AnimationEngine.Instance);
         }
         public static SystemServiceDelegate Instance { get; } = new SystemServiceDelegate();
     }

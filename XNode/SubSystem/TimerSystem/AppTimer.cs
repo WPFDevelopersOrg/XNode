@@ -1,4 +1,5 @@
-﻿using System.Windows.Threading;
+﻿using System.Diagnostics;
+using System.Windows.Threading;
 using XLib.Base.AppFrame;
 
 namespace XNode.SubSystem.TimerSystem
@@ -19,13 +20,7 @@ namespace XNode.SubSystem.TimerSystem
 
         #endregion
 
-        #region 属性
-
-        public override string Name { get; set; } = "应用程序定时器";
-
-        #endregion
-
-        #region 生成周期
+        #region 生命周期
 
         public override void Start()
         {
