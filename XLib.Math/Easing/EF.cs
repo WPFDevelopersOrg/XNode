@@ -59,7 +59,9 @@
         public static double OutSine(double t) => (double)System.Math.Sin(t * System.Math.PI / 2);
         public static double InOutSine(double t) => (double)(System.Math.Cos(t * System.Math.PI) - 1) / -2;
 
-        // 振荡
+        #endregion
+
+        #region 振荡
 
         public static double InElastic(double t) => 1 - OutElastic(1 - t);
         public static double OutElastic(double t)
